@@ -96,8 +96,14 @@ write_outputs <- function(inputs, part1, part2, periods, falls, sensitivity, set
       stock_bond_correlation = spread3(corr),
       factor_correlations = spread3(cor(inputs[inputs$month >= first_month, FACTORS])[upper.tri(diag(6))]),
       equal_risk_mean_weights = as.list(r3(colMeans(part2[["Equal risk"]]$weights))),
-      equal_weight_mean_risk = as.list(r3(colMeans(part2[["Equal weights"]]$risk)))
-    )
+      equal_weight_mean_risk = as.list(r3(colMeans(part2[["Equal weights"]]$risk))),
+      sixty_forty_stock_risk_over_100 = runs_where(sf$month, sf$risk[, "Market"] > 1),
+      negative_correlation = runs_where(sf$month, corr < 0)
+    ),
+    assets = asset_stats(inputs, first_month, end),
+    worst_falls = rows(do.call(rbind, lapply(names(everything), function(n) {
+      cbind(strategy = n, worst_fall(everything[[n]]))
+    })))
   )
   write_json(summary, file.path(dir, "site", "summary.json"))
   write_results_md(s1, s2, by_period, fall_table, sensitivity, summary, file.path(dir, "RESULTS.md"))
@@ -108,6 +114,40 @@ write_outputs <- function(inputs, part1, part2, periods, falls, sensitivity, set
 }
 
 r3 <- function(x) round(x, 3)
+
+# Months where `flag` holds: how many, and the longest unbroken run.
+runs_where <- function(month, flag) {
+  r <- rle(flag)
+  ends <- cumsum(r$lengths)
+  starts <- ends - r$lengths + 1
+  true_runs <- which(r$values)
+  longest <- true_runs[which.max(r$lengths[true_runs])]
+  list(
+    months = sum(flag), share = r3(mean(flag)),
+    longest_from = month[starts[longest]], longest_to = month[ends[longest]],
+    longest_months = r$lengths[longest]
+  )
+}
+
+# The worst fall from a peak: when it peaked, when it bottomed and how far it fell.
+worst_fall <- function(bt) {
+  g <- c(1, growth(bt$return))
+  months <- c(NA, bt$month)
+  dd <- g / cummax(g) - 1
+  trough <- which.min(dd)
+  peak <- which.max(g[1:trough])
+  data.frame(peak = if (peak == 1) "start" else months[peak], trough = months[trough], fall = r3(dd[trough]))
+}
+
+# Each asset's own record over the results period, and the stock-bond correlation.
+asset_stats <- function(inputs, from, to) {
+  d <- inputs[inputs$month >= from & inputs$month <= to, ]
+  stat <- function(r) list(return = round(prod(1 + r)^(12 / length(r)) - 1, 4), volatility = round(stats::sd(r) * sqrt(12), 4))
+  list(
+    stocks = stat(d$Market), bonds = stat(d$Bonds), cash = stat(d$Cash),
+    stock_bond_correlation = r3(stats::cor(d$Market, d$Bonds))
+  )
+}
 
 spread3 <- function(x) as.list(r3(c(mean = mean(x), min = min(x), max = max(x))))
 
