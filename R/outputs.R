@@ -41,10 +41,10 @@ write_outputs <- function(inputs, part1, part2, periods, falls, sensitivity, set
     note = "Averages of the monthly forecasts over the whole period.",
     sixty_forty = list(
       money = list(stocks = 0.6, bonds = 0.4),
-      risk = list(stocks = r3(mean(sf$risk[, "Market"])), bonds = r3(mean(sf$risk[, "Bonds"])))
+      risk = list(stocks = round(mean(sf$risk[, "Market"]), 4), bonds = round(mean(sf$risk[, "Bonds"]), 4))
     ),
     risk_parity = list(
-      money = list(stocks = r3(mean(rp$weights[, "Market"])), bonds = r3(mean(rp$weights[, "Bonds"]))),
+      money = list(stocks = round(mean(rp$weights[, "Market"]), 4), bonds = round(mean(rp$weights[, "Bonds"]), 4)),
       risk = list(stocks = 0.5, bonds = 0.5)
     )
   )
@@ -95,10 +95,15 @@ write_outputs <- function(inputs, part1, part2, periods, falls, sensitivity, set
       levered_exposure = spread3(rowSums(lv$weights)),
       stock_bond_correlation = spread3(corr),
       factor_correlations = spread3(cor(inputs[inputs$month >= first_month, FACTORS])[upper.tri(diag(6))]),
-      equal_risk_mean_weights = as.list(r3(colMeans(part2[["Equal risk"]]$weights))),
-      equal_weight_mean_risk = as.list(r3(colMeans(part2[["Equal weights"]]$risk))),
+      equal_risk_mean_weights = as.list(round(colMeans(part2[["Equal risk"]]$weights), 6)),
+      equal_weight_mean_risk = as.list(round(colMeans(part2[["Equal weights"]]$risk), 6)),
       sixty_forty_stock_risk_over_100 = runs_where(sf$month, sf$risk[, "Market"] > 1),
       negative_correlation = runs_where(sf$month, corr < 0)
+    ),
+    falls_count = list(
+      falls = nrow(fall_table),
+      risk_parity_fell_less = sum(fall_table[["Risk parity"]] > fall_table[["60/40"]]),
+      levered_fell_less = sum(fall_table[["Risk parity, levered"]] > fall_table[["60/40"]])
     ),
     assets = asset_stats(inputs, first_month, end),
     worst_falls = rows(do.call(rbind, lapply(names(everything), function(n) {
@@ -123,9 +128,10 @@ runs_where <- function(month, flag) {
   true_runs <- which(r$values)
   longest <- true_runs[which.max(r$lengths[true_runs])]
   list(
-    months = sum(flag), share = r3(mean(flag)),
+    months = sum(flag), share = round(mean(flag), 6),
     longest_from = month[starts[longest]], longest_to = month[ends[longest]],
-    longest_months = r$lengths[longest]
+    longest_months = r$lengths[longest],
+    outside_longest = sum(flag) - r$lengths[longest]
   )
 }
 
@@ -136,25 +142,26 @@ worst_fall <- function(bt) {
   dd <- g / cummax(g) - 1
   trough <- which.min(dd)
   peak <- which.max(g[1:trough])
-  data.frame(peak = if (peak == 1) "start" else months[peak], trough = months[trough], fall = r3(dd[trough]))
+  data.frame(peak = if (peak == 1) "start" else months[peak], trough = months[trough], fall = round(dd[trough], 6))
 }
 
 # Each asset's own record over the results period, and the stock-bond correlation.
 asset_stats <- function(inputs, from, to) {
   d <- inputs[inputs$month >= from & inputs$month <= to, ]
-  stat <- function(r) list(return = round(prod(1 + r)^(12 / length(r)) - 1, 4), volatility = round(stats::sd(r) * sqrt(12), 4))
+  stat <- function(r) list(return = round(prod(1 + r)^(12 / length(r)) - 1, 6), volatility = round(stats::sd(r) * sqrt(12), 6))
   list(
     stocks = stat(d$Market), bonds = stat(d$Bonds), cash = stat(d$Cash),
-    stock_bond_correlation = r3(stats::cor(d$Market, d$Bonds))
+    stock_bond_correlation = round(stats::cor(d$Market, d$Bonds), 6)
   )
 }
 
-spread3 <- function(x) as.list(r3(c(mean = mean(x), min = min(x), max = max(x))))
+# Summary figures keep 6 decimals, so the website rounds them once, not twice.
+spread3 <- function(x) as.list(round(c(mean = mean(x), min = min(x), max = max(x)), 6))
 
-# A data frame as a list of row objects (a JSON array), numbers rounded to 4 decimals.
+# A data frame as a list of row objects (a JSON array), numbers rounded to 6 decimals.
 rows <- function(d) {
   unname(lapply(seq_len(nrow(d)), function(i) {
-    lapply(as.list(d[i, , drop = FALSE]), function(v) if (is.numeric(v)) round(v, 4) else v)
+    lapply(as.list(d[i, , drop = FALSE]), function(v) if (is.numeric(v)) round(v, 6) else v)
   }))
 }
 

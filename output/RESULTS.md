@@ -12,7 +12,7 @@ Settings: 36-month covariance window, trading costs of 10 bps per unit of turnov
 | Risk parity | 8.0% | 7.9% | 0.43 | -19% | 0.24 |
 | Risk parity, levered | 8.8% | 10.8% | 0.41 | -32% | 0.53 |
 
-60/40's stocks carried 89% of its risk on average (between 66% and 122%). Risk parity held 34% in stocks on average (between 19% and 50%). Levered risk parity's exposure averaged 1.40 times capital (between 1.02 and 2.26).
+60/40's stocks carried 89% of its risk on average (between 66% and 122%). Risk parity held 34% in stocks on average (between 19% and 49%). Levered risk parity's exposure averaged 1.40 times capital (between 1.02 and 2.26).
 
 ## Smart beta: six long-only factor portfolios
 
