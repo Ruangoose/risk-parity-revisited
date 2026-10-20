@@ -1,0 +1,50 @@
+"run","strategy","return","volatility","sharpe","max_dd","turnover"
+"Baseline","Stocks",0.10753,0.15754,0.43825,-0.50306,0
+"Baseline","60/40",0.09234,0.10294,0.46608,-0.30302,0.21112
+"Baseline","Risk parity",0.07978,0.07898,0.43403,-0.19197,0.23851
+"Baseline","Risk parity, levered",0.08791,0.10824,0.41071,-0.319,0.52692
+"Baseline","Equal weights",0.12729,0.15922,0.54741,-0.49908,0.19038
+"Baseline","Inverse volatility",0.12638,0.15355,0.5565,-0.48568,0.23399
+"Baseline","Equal risk",0.12609,0.15341,0.55519,-0.48591,0.24361
+"60-month window","Stocks",0.10753,0.15754,0.43825,-0.50306,0
+"60-month window","60/40",0.09234,0.10294,0.46608,-0.30302,0.21112
+"60-month window","Risk parity",0.07887,0.07962,0.4205,-0.19165,0.21048
+"60-month window","Risk parity, levered",0.08566,0.10695,0.39489,-0.31947,0.40127
+"60-month window","Equal weights",0.12729,0.15922,0.54741,-0.49908,0.19038
+"60-month window","Inverse volatility",0.12702,0.15362,0.56004,-0.48155,0.20437
+"60-month window","Equal risk",0.12682,0.15352,0.55916,-0.48079,0.20812
+"No trading costs","Stocks",0.10753,0.15754,0.43825,-0.50306,0
+"No trading costs","60/40",0.09257,0.10295,0.46811,-0.30275,0.21112
+"No trading costs","Risk parity",0.08004,0.07899,0.43702,-0.19183,0.23851
+"No trading costs","Risk parity, levered",0.08848,0.10825,0.41551,-0.31839,0.52692
+"No trading costs","Equal weights",0.1275,0.15922,0.5486,-0.49891,0.19038
+"No trading costs","Inverse volatility",0.12664,0.15356,0.55801,-0.48549,0.23399
+"No trading costs","Equal risk",0.12636,0.15341,0.55677,-0.48572,0.24361
+"Trading costs 25 bps","Stocks",0.10753,0.15754,0.43825,-0.50306,0
+"Trading costs 25 bps","60/40",0.09199,0.10294,0.46303,-0.30343,0.21112
+"Trading costs 25 bps","Risk parity",0.0794,0.07897,0.42954,-0.19219,0.23851
+"Trading costs 25 bps","Risk parity, levered",0.08706,0.10821,0.40352,-0.3199,0.52692
+"Trading costs 25 bps","Equal weights",0.12697,0.15922,0.54563,-0.49933,0.19038
+"Trading costs 25 bps","Inverse volatility",0.12599,0.15355,0.55423,-0.48595,0.23399
+"Trading costs 25 bps","Equal risk",0.12568,0.15341,0.55283,-0.48619,0.24361
+"Borrowing at the bill rate","Stocks",0.10753,0.15754,0.43825,-0.50306,0
+"Borrowing at the bill rate","60/40",0.09234,0.10294,0.46608,-0.30302,0.21112
+"Borrowing at the bill rate","Risk parity",0.07978,0.07898,0.43403,-0.19197,0.23851
+"Borrowing at the bill rate","Risk parity, levered",0.09007,0.10823,0.42904,-0.31606,0.52683
+"Borrowing at the bill rate","Equal weights",0.12729,0.15922,0.54741,-0.49908,0.19038
+"Borrowing at the bill rate","Inverse volatility",0.12638,0.15355,0.5565,-0.48568,0.23399
+"Borrowing at the bill rate","Equal risk",0.12609,0.15341,0.55519,-0.48591,0.24361
+"Borrowing at bills + 1%","Stocks",0.10753,0.15754,0.43825,-0.50306,0
+"Borrowing at bills + 1%","60/40",0.09234,0.10294,0.46608,-0.30302,0.21112
+"Borrowing at bills + 1%","Risk parity",0.07978,0.07898,0.43403,-0.19197,0.23851
+"Borrowing at bills + 1%","Risk parity, levered",0.08576,0.10825,0.39237,-0.32193,0.52702
+"Borrowing at bills + 1%","Equal weights",0.12729,0.15922,0.54741,-0.49908,0.19038
+"Borrowing at bills + 1%","Inverse volatility",0.12638,0.15355,0.5565,-0.48568,0.23399
+"Borrowing at bills + 1%","Equal risk",0.12609,0.15341,0.55519,-0.48591,0.24361
+"Bonds from monthly-average yields (GS10)","Stocks",0.10753,0.15754,0.43825,-0.50306,0
+"Bonds from monthly-average yields (GS10)","60/40",0.09232,0.10185,0.46976,-0.30674,0.20713
+"Bonds from monthly-average yields (GS10)","Risk parity",0.0779,0.07179,0.44546,-0.181,0.22941
+"Bonds from monthly-average yields (GS10)","Risk parity, levered",0.08805,0.10654,0.41635,-0.3414,0.58759
+"Bonds from monthly-average yields (GS10)","Equal weights",0.12729,0.15922,0.54741,-0.49908,0.19038
+"Bonds from monthly-average yields (GS10)","Inverse volatility",0.12638,0.15355,0.5565,-0.48568,0.23399
+"Bonds from monthly-average yields (GS10)","Equal risk",0.12609,0.15341,0.55519,-0.48591,0.24361

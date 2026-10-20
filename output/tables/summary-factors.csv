@@ -1,0 +1,5 @@
+"strategy","return","volatility","sharpe","max_dd","turnover"
+"Market",0.10753,0.15754,0.43825,-0.50306,0
+"Equal weights",0.12729,0.15922,0.54741,-0.49908,0.19038
+"Inverse volatility",0.12638,0.15355,0.5565,-0.48568,0.23399
+"Equal risk",0.12609,0.15341,0.55519,-0.48591,0.24361
